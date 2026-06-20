@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import PhoneMock from './previews/PhoneMock.astro';
+import TerminalMock from './previews/TerminalMock.astro';
+import WindowMock from './previews/WindowMock.astro';
+import BrowserMock from './previews/BrowserMock.astro';
+
+const entries = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+
+const previewMap = {
+  phone: PhoneMock,
+  terminal: TerminalMock,
+  window: WindowMock,
+  browser: BrowserMock,
+} as const;
+---
+<section class="blk" id="work" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="eyebrow">Selected work</span>
+        <h2>Things we built, tested, and shipped.</h2>
+      </div>
+      <p class="sub">A slice of the portfolio across mobile, embedded, and desktop. Swap these for your live case studies anytime.</p>
+    </div>
+    <div class="work-grid">
+      {entries.map(entry => {
+        const Preview = previewMap[entry.data.previewType];
+        return (
+          <div class="work reveal">
+            <Preview />
+            <div class="meta">
+              <div class="row">
+                <span class="kicker">{entry.data.kicker}</span>
+              </div>
+              <h3>{entry.data.title}</h3>
+              <p>{entry.data.summary}</p>
+              <div class="stack">
+                {entry.data.stack.map(s => <span>{s}</span>)}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
