@@ -3,8 +3,6 @@ name: Deploy codedmark.com to GitHub Pages
 on:
   push:
     branches: [main]
-    paths:
-      - 'products/codedmark-site/**'
   workflow_dispatch:
 
 permissions:
@@ -30,5 +28,5 @@ jobs:
         id: deployment
         uses: withastro/action@v3
         with:
-          path: products/codedmark-site
+          path: .
           node-version: 22
