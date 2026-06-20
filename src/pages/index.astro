@@ -1,3 +1,9 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
 ---
-<html><body>hello</body></html>
+<BaseLayout>
+  <Nav />
+  <span id="top"></span>
+  <main style="padding: 100px 40px; font-size: 24px;">Nav check</main>
+</BaseLayout>
