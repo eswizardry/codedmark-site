@@ -6,8 +6,11 @@ const work = defineCollection({
     title: z.string(),
     kicker: z.string(),
     summary: z.string(),
+    outcomes: z.array(z.string()).default([]),
     stack: z.array(z.string()),
     previewType: z.enum(['phone', 'terminal', 'window', 'browser']),
+    link: z.string().url().optional(),
+    linkLabel: z.string().default('Visit site'),
     order: z.number(),
   }),
 });

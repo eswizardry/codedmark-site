@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import PhoneMock from '../../components/previews/PhoneMock.astro';
+import TerminalMock from '../../components/previews/TerminalMock.astro';
+import WindowMock from '../../components/previews/WindowMock.astro';
+import BrowserMock from '../../components/previews/BrowserMock.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('work');
+  return entries.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const previewMap = {
+  phone: PhoneMock,
+  terminal: TerminalMock,
+  window: WindowMock,
+  browser: BrowserMock,
+} as const;
+const Preview = previewMap[entry.data.previewType];
+---
+<BaseLayout title={`${entry.data.title} — CodeDMark`} description={entry.data.summary}>
+  <Nav />
+  <span id="top"></span>
+
+  <header class="case-hero">
+    <div class="wrap">
+      <div class="case-hero-inner">
+        <a href="/#work" class="back-link">← Work</a>
+        <span class="eyebrow">{entry.data.kicker}</span>
+        <h1>{entry.data.title}</h1>
+        <p class="case-lead">{entry.data.summary}</p>
+        {entry.data.outcomes.length > 0 && (
+          <ul class="case-outcomes">
+            {entry.data.outcomes.map(o => <li>{o}</li>)}
+          </ul>
+        )}
+        <div class="case-hero-cta">
+          {entry.data.link && (
+            <a href={entry.data.link} target="_blank" rel="noopener" class="btn btn-primary">
+              {entry.data.linkLabel} <span class="arr">↗</span>
+            </a>
+          )}
+          <a href="/#work" class="btn btn-ghost">← All work</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="case-preview-wrap">
+    <div class="wrap">
+      <div class="case-preview">
+        <Preview />
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="case-stack-bar">
+      {entry.data.stack.map(s => <span>{s}</span>)}
+    </div>
+    <div class="prose case-prose">
+      <Content />
+    </div>
+  </div>
+
+  <div class="case-footer">
+    <div class="wrap">
+      <a href="/#work" class="btn btn-ghost">← Back to all work</a>
+      {entry.data.link && (
+        <a href={entry.data.link} target="_blank" rel="noopener" class="btn btn-primary">
+          {entry.data.linkLabel} ↗
+        </a>
+      )}
+    </div>
+  </div>
+
+  <Footer />
+</BaseLayout>

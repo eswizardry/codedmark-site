@@ -21,7 +21,7 @@ const previewMap = {
         <span class="eyebrow">Selected work</span>
         <h2>Things we built, tested, and shipped.</h2>
       </div>
-      <p class="sub">A slice of the portfolio across mobile, embedded, and desktop. Swap these for your live case studies anytime.</p>
+      <p class="sub">A slice of the portfolio across mobile, embedded, and desktop.</p>
     </div>
     <div class="work-grid">
       {entries.map(entry => {
@@ -30,13 +30,26 @@ const previewMap = {
           <div class="work reveal">
             <Preview />
             <div class="meta">
-              <div class="row">
-                <span class="kicker">{entry.data.kicker}</span>
-              </div>
+              <span class="kicker">{entry.data.kicker}</span>
               <h3>{entry.data.title}</h3>
               <p>{entry.data.summary}</p>
+              {entry.data.outcomes.length > 0 && (
+                <ul class="work-outcomes">
+                  {entry.data.outcomes.map(o => <li>{o}</li>)}
+                </ul>
+              )}
               <div class="stack">
                 {entry.data.stack.map(s => <span>{s}</span>)}
+              </div>
+              <div class="work-cta">
+                <a href={`/work/${entry.slug}/`} class="btn btn-ghost work-btn">
+                  Case study <span class="arr">→</span>
+                </a>
+                {entry.data.link && (
+                  <a href={entry.data.link} target="_blank" rel="noopener" class="btn btn-ghost work-btn">
+                    {entry.data.linkLabel} <span>↗</span>
+                  </a>
+                )}
               </div>
             </div>
           </div>
