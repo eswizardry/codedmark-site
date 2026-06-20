@@ -1,0 +1,41 @@
+---
+const cols = [
+  {
+    heading: 'Mobile',
+    items: ['Flutter', 'Dart', 'Riverpod / Bloc', 'SQLite / Isar', 'Offline-first sync'],
+  },
+  {
+    heading: 'Embedded',
+    items: ['C / C++', 'STM32 · Cortex-M', 'FreeRTOS', 'I²C · SPI · UART', 'Ceedling / Unity'],
+  },
+  {
+    heading: 'Desktop & Web',
+    items: ['Qt / C++', 'Linux SBC', 'Astro · TypeScript', 'Tailwind', 'Static / Jamstack'],
+  },
+  {
+    heading: 'Quality & ops',
+    items: ['Unit & integration tests', 'GitHub Actions CI', 'On-target test rigs', 'Git · code review', 'Semantic releases'],
+  },
+];
+---
+<section class="blk" id="stack">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="eyebrow">Tech &amp; skills</span>
+        <h2>The tools we reach for.</h2>
+      </div>
+      <p class="sub">Deep where it counts, pragmatic everywhere else. We pick boring, proven tools and test them hard.</p>
+    </div>
+    <div class="stack-grid">
+      {cols.map(col => (
+        <div class="stk reveal">
+          <h4>{col.heading}</h4>
+          <ul>
+            {col.items.map(item => <li>{item}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

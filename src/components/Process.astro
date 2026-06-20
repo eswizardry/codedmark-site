@@ -1,0 +1,44 @@
+---
+const steps = [
+  {
+    n: '— 01',
+    heading: 'Scope',
+    desc: 'We map the real problem, the constraints, and what "done" means — in writing, before a line of code.',
+  },
+  {
+    n: '— 02',
+    heading: 'Build',
+    desc: 'Short cycles, working software early. You see progress every week, not a black box for a month.',
+  },
+  {
+    n: '— 03',
+    heading: 'Test',
+    desc: 'Unit tests, integration tests, and on real hardware where it matters. If a teacher would tick it, we keep it.',
+  },
+  {
+    n: '— 04',
+    heading: 'Ship',
+    desc: 'A clean handoff — tested build, docs, and a repo your next engineer can actually read. Marked good.',
+  },
+];
+---
+<section class="blk" id="process" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="eyebrow">How we work</span>
+        <h2>Plain. Precise. Proven.</h2>
+      </div>
+      <p class="sub">No buzzwords, no surprises. Numbers over adjectives, evidence before promises.</p>
+    </div>
+    <div class="proc reveal">
+      {steps.map(s => (
+        <div class="step">
+          <div class="n">{s.n}</div>
+          <h4>{s.heading}</h4>
+          <p>{s.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
