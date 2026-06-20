@@ -9,7 +9,7 @@ outcomes:
 stack: ["Flutter", "Dart", "SQLite", "iOS", "Android"]
 previewType: "phone"
 screenshot: "/images/work/tally.jpg"
-order: 7
+order: 8
 ---
 
 ## The app

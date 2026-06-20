@@ -11,7 +11,7 @@ previewType: "phone"
 screenshot: "/images/work/kids-edu-zone-store.png"
 link: "https://play.google.com/store/apps/details?id=com.eswizardry.kidseduzone"
 linkLabel: "Google Play"
-order: 5
+order: 6
 ---
 
 ## The app

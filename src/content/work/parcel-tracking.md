@@ -11,7 +11,7 @@ previewType: "phone"
 screenshot: "/images/work/parcel-tracking.png"
 link: "https://play.google.com/store/apps/details?id=com.bexworks.AfterPost"
 linkLabel: "Google Play"
-order: 6
+order: 7
 ---
 
 ## The app

@@ -11,7 +11,7 @@ previewType: "phone"
 screenshot: "/images/work/hunhuay-store.png"
 link: "https://play.google.com/store/apps/details?id=com.eswizardry.hunhuay"
 linkLabel: "Google Play"
-order: 2
+order: 3
 ---
 
 ## The app

@@ -11,7 +11,7 @@ previewType: "phone"
 screenshot: "/images/work/learn-first-words-store.png"
 link: "https://play.google.com/store/apps/details?id=com.eswizardry.myfirstword"
 linkLabel: "Google Play"
-order: 4
+order: 5
 ---
 
 ## The app
