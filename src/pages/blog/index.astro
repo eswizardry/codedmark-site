@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+function fmtDate(d: Date) {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+const langLabel: Record<string, string> = { en: 'EN', th: 'TH', 'th-en': 'TH/EN' };
+---
+<BaseLayout title="Blog — CodeDMark" description="Technical articles on embedded systems, firmware testing, mobile, and software delivery from the CodeDMark studio.">
+  <Nav />
+  <span id="top"></span>
+
+  <section class="blog-hero blk">
+    <div class="wrap">
+      <div class="blog-hero-inner reveal">
+        <span class="eyebrow">Writing</span>
+        <h1>Notes from the studio.</h1>
+        <p class="blog-lead">Embedded systems, firmware testing, mobile, and the craft of shipping software that holds up.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="post-grid">
+        {posts.map((post) => (
+          <a href={`/blog/${post.slug}/`} class="post-card reveal">
+            <div class="post-card-meta">
+              <span class="post-date">{fmtDate(post.data.pubDate)}</span>
+              <span class="post-lang">{langLabel[post.data.lang]}</span>
+            </div>
+            <h2>{post.data.title}</h2>
+            <p>{post.data.description}</p>
+            {post.data.tags.length > 0 && (
+              <div class="post-tags">
+                {post.data.tags.map((t) => <span>{t}</span>)}
+              </div>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -6% 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>

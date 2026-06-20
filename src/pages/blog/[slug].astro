@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+function fmtDate(d: Date) {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+---
+<BaseLayout title={`${post.data.title} — CodeDMark`} description={post.data.description}>
+  <Nav />
+  <span id="top"></span>
+
+  <article>
+    <header class="article-hero">
+      <div class="wrap">
+        <div class="article-hero-inner">
+          <a href="/blog/" class="back-link">← Blog</a>
+          {post.data.tags.length > 0 && (
+            <div class="post-tags" style="margin-bottom: 20px;">
+              {post.data.tags.map((t) => <span>{t}</span>)}
+            </div>
+          )}
+          <h1>{post.data.title}</h1>
+          <p class="article-desc">{post.data.description}</p>
+          <div class="article-byline">
+            <span>CodeDMark Studio</span>
+            <span class="sep">·</span>
+            <time datetime={post.data.pubDate.toISOString()}>{fmtDate(post.data.pubDate)}</time>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+
+    <div class="article-footer">
+      <div class="wrap">
+        <a href="/blog/" class="btn btn-ghost">← Back to Blog</a>
+      </div>
+    </div>
+  </article>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>

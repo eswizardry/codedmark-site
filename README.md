@@ -52,6 +52,9 @@ src/
     BaseLayout.astro       # <head>, fonts, FOUC-safe theme script
   pages/
     index.astro            # Single page — composes all section components
+    blog/
+      index.astro          # Blog listing page (/blog/)
+      [slug].astro         # Individual article page (/blog/<slug>/)
   components/
     Mark.astro             # Reusable SVG logo mark (props: size)
     Nav.astro              # Sticky nav + theme toggle + mobile menu
@@ -70,12 +73,13 @@ src/
       WindowMock.astro     # CSS desktop window mock (Qt HMI card)
       BrowserMock.astro    # CSS browser mock (Marketing sites card)
   content/
-    config.ts              # Zod schema for the "work" collection
+    config.ts              # Zod schemas for "work" and "blog" collections
     work/                  # One .md file per portfolio entry
       01-m1-hero.md
       02-sensor-node.md
       03-industrial-panel.md
       04-marketing-sites.md
+    blog/                  # One .md file per blog post
   styles/
     global.css             # All CSS: tokens, layout, components, breakpoints
 public/
@@ -121,6 +125,51 @@ order: 5                         # Controls sort order in the grid
 To use a real screenshot instead of a CSS mock, add the image to `public/` and edit `Work.astro` to render an `<img>` when a `screenshot` frontmatter field is present.
 
 Push to `main` — the site redeploys automatically.
+
+---
+
+## How to write a blog post
+
+Create a new `.md` file in `src/content/blog/`. Use a descriptive slug as the filename — it becomes the URL:
+
+```bash
+touch src/content/blog/my-article-title.md
+```
+
+Fill in the frontmatter and write the post body in Markdown:
+
+```markdown
+---
+title: "My Article Title"
+description: "One sentence summary shown in the listing card and meta description."
+pubDate: 2026-06-20
+tags: ["embedded", "testing"]
+lang: "en"          # en | th | th-en
+draft: false        # set true to hide from listing without deleting
+---
+
+Post body in Markdown...
+```
+
+**Frontmatter fields:**
+
+| Field | Type | Required |
+|---|---|---|
+| `title` | string | yes |
+| `description` | string | yes |
+| `pubDate` | date (YYYY-MM-DD) | yes |
+| `tags` | string array | no (default `[]`) |
+| `lang` | `en` \| `th` \| `th-en` | no (default `en`) |
+| `draft` | boolean | no (default `false`) |
+
+Push to `main` — the article appears at `codedmark.com/blog/<filename-without-extension>/`.
+
+**Cloudflare redirect (blog subdomain):**  
+Add a redirect rule in Cloudflare dashboard (Rules → Redirect Rules):
+- Expression: `http.host eq "blog.codedmark.com"`
+- Destination URL: `https://codedmark.com/blog/` (301 permanent)
+
+This sends any visitor to `blog.codedmark.com` to the new blog section.
 
 ---
 
