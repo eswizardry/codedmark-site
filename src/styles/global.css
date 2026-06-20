@@ -224,6 +224,11 @@ section.blk { padding: 96px 0; }
 .winm .bars { display: flex; gap: 8px; align-items: flex-end; height: 60px; }
 .winm .bars b { flex: 1; background: var(--green); border-radius: 4px 4px 0 0; display: block; opacity: .85; }
 
+/* work screenshot image */
+.work .preview { background: var(--bg); }
+.work-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.case-screenshot { max-height: 520px; max-width: 100%; object-fit: contain; display: block; margin: 0 auto; border-radius: 12px; box-shadow: var(--shadow); }
+
 /* work outcomes + cta */
 .work-outcomes { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .work-outcomes li { font-size: 13.5px; color: var(--muted); line-height: 1.45; display: flex; align-items: baseline; gap: 9px; }

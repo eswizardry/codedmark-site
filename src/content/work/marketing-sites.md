@@ -10,7 +10,7 @@ stack: ["Astro", "Tailwind CSS", "GitHub Actions", "Cloudflare DNS", "Markdown"]
 previewType: "browser"
 link: "https://codedmark.com"
 linkLabel: "View this site"
-order: 4
+order: 10
 ---
 
 ## The work

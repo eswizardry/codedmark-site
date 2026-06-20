@@ -8,7 +8,7 @@ outcomes:
   - "Protocol stack has 100% state-transition coverage via CMock test doubles"
 stack: ["C", "STM32", "LoRa", "Ceedling", "CMock", "GitHub Actions"]
 previewType: "terminal"
-order: 2
+order: 8
 ---
 
 ## The challenge

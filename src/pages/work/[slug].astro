@@ -55,7 +55,10 @@ const Preview = previewMap[entry.data.previewType];
   <div class="case-preview-wrap">
     <div class="wrap">
       <div class="case-preview">
-        <Preview />
+        {entry.data.screenshot
+          ? <img src={entry.data.screenshot} alt={entry.data.title} class="case-screenshot" />
+          : <Preview />
+        }
       </div>
     </div>
   </div>

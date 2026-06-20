@@ -8,7 +8,7 @@ outcomes:
   - "Single codebase handles both Modbus RTU (RS-485) and Modbus TCP instruments"
 stack: ["Qt", "C++", "Linux", "Modbus RTU", "Modbus TCP", "systemd"]
 previewType: "window"
-order: 3
+order: 9
 ---
 
 ## The challenge

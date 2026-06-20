@@ -8,7 +8,7 @@ outcomes:
   - "Teacher dashboard surfaces struggling students in one view, not a week later"
 stack: ["Flutter", "Dart", "SQLite", "Go", "Fly.io"]
 previewType: "phone"
-# link: "https://play.google.com/..."   # add App Store / Play Store URL here
+screenshot: "/images/work/m1-hero.png"
 order: 1
 ---
 

@@ -28,7 +28,12 @@ const previewMap = {
         const Preview = previewMap[entry.data.previewType];
         return (
           <div class="work reveal">
-            <Preview />
+            <div class="preview" class:list={[!entry.data.screenshot && 'preview-mock']}>
+              {entry.data.screenshot
+                ? <img src={entry.data.screenshot} alt={entry.data.title} class="work-img" loading="lazy" />
+                : <Preview />
+              }
+            </div>
             <div class="meta">
               <span class="kicker">{entry.data.kicker}</span>
               <h3>{entry.data.title}</h3>
