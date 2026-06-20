@@ -1,0 +1,65 @@
+---
+const services = [
+  {
+    title: 'Mobile apps',
+    desc: 'Cross-platform apps in Flutter — one codebase, iOS and Android, native-feeling and offline-ready.',
+    tags: ['Flutter', 'Dart', 'iOS · Android'],
+    icon: `<rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/>`,
+  },
+  {
+    title: 'Embedded & firmware',
+    desc: 'Bare-metal and RTOS firmware on Cortex-M and friends. Drivers, comms, bring-up, and unit-tested logic.',
+    tags: ['C', 'STM32', 'RTOS'],
+    icon: `<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2.5v3M15 2.5v3M9 18.5v3M15 18.5v3M2.5 9h3M2.5 15h3M18.5 9h3M18.5 15h3"/>`,
+  },
+  {
+    title: 'Web apps & sites',
+    desc: 'Fast, static-first sites and dashboards. Built to deploy anywhere — including GitHub Pages — and score green on Lighthouse.',
+    tags: ['Astro', 'JS/TS', 'Static'],
+    icon: `<rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M2.5 9h19"/><path d="M6 6.7h.01M8.4 6.7h.01"/>`,
+  },
+  {
+    title: 'Desktop & HMI',
+    desc: 'Qt/C++ interfaces for instruments, kiosks, and industrial panels — boots cold and runs for years.',
+    tags: ['Qt', 'C++', 'Linux SBC'],
+    icon: `<rect x="2.5" y="3.5" width="19" height="13" rx="2"/><path d="M8 20.5h8M12 16.5v4"/>`,
+  },
+  {
+    title: 'EdTech & learning',
+    desc: 'Classroom-ready learning tools — adaptive practice, progress tracking, and content built for real students.',
+    tags: ['Flutter', 'Curriculum', 'Offline'],
+    icon: `<path d="M12 3 2.5 7.5 12 12l9.5-4.5L12 3z"/><path d="M6 9.7v4.8c0 1.3 2.7 2.5 6 2.5s6-1.2 6-2.5V9.7"/>`,
+  },
+  {
+    title: 'Consulting & code audit',
+    desc: 'A second set of eyes — architecture reviews, test-coverage rescue, and getting a stalled build out the door.',
+    tags: ['Review', 'CI/CD', 'Testing'],
+    icon: `<path d="M9 11.5 11 13.5 15.5 9"/><circle cx="12" cy="12" r="9"/>`,
+  },
+];
+---
+<section class="blk" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="eyebrow">What we do</span>
+        <h2>One studio, the whole stack — from silicon to screen.</h2>
+      </div>
+      <p class="sub">We take products from a napkin sketch to a tested, shipped build. Pick a layer, or hand us the whole thing.</p>
+    </div>
+    <div class="svc-grid">
+      {services.map(s => (
+        <div class="svc reveal">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={s.icon} />
+          </div>
+          <h3>{s.title}</h3>
+          <p>{s.desc}</p>
+          <div class="tags">
+            {s.tags.map(t => <span>{t}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
