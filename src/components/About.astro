@@ -1,0 +1,62 @@
+---
+import Mark from './Mark.astro';
+---
+<section class="blk" id="about" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="wrap about">
+    <div class="body reveal">
+      <span class="eyebrow">About</span>
+      <h2 style="font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.035em;font-weight:800;margin:14px 0 26px">
+        A small studio that ships like a big one.
+      </h2>
+      <p>
+        <b>CodeDMark</b> is a software studio out of Thailand. The name is a promise that works
+        in two languages: in English it reads as a developer's mark on the work; in Thai,
+        <b>โค้ดดีมาก</b> — "code that's very good."
+      </p>
+      <p>
+        We come from embedded — where a bug means a field return, not a hotfix — so testing
+        isn't a phase, it's a habit. That discipline travels with us up the stack to mobile and web.
+      </p>
+      <p>
+        Founded by <b>Bancha Rajainthong</b>. We take on a small number of engagements at a time,
+        so the people who scope your project are the ones who build it.
+      </p>
+      <div class="pills">
+        <span>Tested</span>
+        <span>Shipped</span>
+        <span>Measured</span>
+      </div>
+    </div>
+    <div class="card-id reveal">
+      <div class="top">
+        <Mark size={54} />
+        <div>
+          <div class="nm">CodeDMark<span class="dot">.</span></div>
+          <div class="ro">Software studio · est. Thailand</div>
+        </div>
+      </div>
+      <div class="rows">
+        <div class="r">
+          <span class="k">Entity</span>
+          <span class="v th">บริษัท โค้ดดีมาก จำกัด</span>
+        </div>
+        <div class="r">
+          <span class="k">Registered</span>
+          <span class="v">CODEDMARK Co., Ltd.</span>
+        </div>
+        <div class="r">
+          <span class="k">Focus</span>
+          <span class="v">Embedded · Mobile · Web</span>
+        </div>
+        <div class="r">
+          <span class="k">Email</span>
+          <span class="v">eswizardry@gmail.com</span>
+        </div>
+        <div class="r">
+          <span class="k">GitHub</span>
+          <span class="v">github.com/eswizardry</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
