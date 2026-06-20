@@ -28,6 +28,6 @@ English Vocab: Word Builder helps Thai learners build the vocabulary they need f
 
 ## Technical approach
 
-The app is fully offline. The word database ships inside the app bundle; study sessions and progress are stored in SQLite on-device. There is no account required, no login, no server for the learner-facing features.
+The app is 100% offline — all 3,000+ words ship inside the app bundle; no download required after install. Study sessions and progress are stored on-device using Hive. No account, no login, no server call needed to learn. Works on the cheapest Android phones with no connectivity.
 
-The only network call is a version check at startup — if a new word pack is available, the user is offered a background download. This keeps the app useful in areas with slow connectivity.
+The app is ad-supported. A one-time in-app purchase removes ads permanently. The learning experience is identical either way.

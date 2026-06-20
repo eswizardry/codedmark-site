@@ -6,7 +6,7 @@ outcomes:
   - "Results published within minutes of the official GLO draw"
   - "Ticket scanner using device camera — no number entry needed"
   - "Works offline once results are cached from the last sync"
-stack: ["Flutter", "Dart", "Go", "Fly.io", "Supabase"]
+stack: ["Flutter", "Dart", "Go", "PocketBase", "Fly.io"]
 previewType: "phone"
 screenshot: "/images/work/hunhuay-store.png"
 link: "https://play.google.com/store/apps/details?id=com.eswizardry.hunhuay"
@@ -22,12 +22,10 @@ Hunhuay makes the check instant — browse the winning numbers or point the came
 
 ## Technical approach
 
-**Scraper + API pipeline.** A Go scraper (deployed on GitHub Actions cron) fetches the official GLO result and writes it to Supabase. The Flutter app polls the API and caches results locally in SQLite for offline access.
+**Scraper + API pipeline.** A Go scraper (deployed on GitHub Actions cron) fetches the official GLO result and writes it to PocketBase. The Flutter app polls the API and caches results locally for offline access after the first sync.
 
-**Flutter UI.** A single shared codebase targets Android and iOS. The home screen shows the winning numbers in a clear hierarchy — first prize at the top, then three/two-digit prizes below. Ticket scanning uses the device camera via the `mobile_scanner` package.
-
-**Real-time push on draw day.** A Firebase Cloud Messaging integration notifies users when results are live — the app badge updates before most users open it.
+**Flutter UI.** A single shared codebase targets Android and iOS. The home screen shows the winning numbers in a clear hierarchy — first prize at the top, then three/two-digit prizes below. Ticket scanning uses the device camera via the `mobile_scanner` package. Results are cached locally with Hive so past draws are available offline.
 
 ## Backend architecture
 
-The backend lives in two repos: `hunhuay-scraper` (GitHub Actions cron) and `hunhuay-api` (Go on Fly.io). The scraper writes to Supabase; the API serves cached results to the Flutter app. Separating the scraper from the API means draw-day traffic spikes hit the API cache, not the scraper process.
+The backend lives in two repos: `hunhuay-scraper` (GitHub Actions cron) and `hunhuay-api` (Go on Fly.io). The scraper fetches the official GLO result and writes it to PocketBase; the Flutter app reads from the API via the `pocketbase` client and caches the result locally. Separating the scraper from the API means draw-day traffic spikes hit the API layer, not the scraper process.

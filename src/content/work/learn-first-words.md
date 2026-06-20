@@ -28,6 +28,8 @@ Learn English: Kids Flashcards is designed for Thai children aged 3–7 who are 
 
 ## Technical approach
 
-The app is entirely offline. All audio clips and images ship in the app bundle. SQLite stores progress (which words have been seen, which the child got right in the matching games). No account, no server, no ads.
+100% offline — all images and audio clips ship in the app bundle. Progress is stored on-device. No account, no login, no server call needed. Works on the cheapest Android phones with no connectivity.
 
-Built with Flutter for Android and iOS from a single codebase. Audio playback uses `audioplayers`; letter tracing uses a custom `CustomPainter` that compares the child's stroke path against a reference.
+The app is ad-supported (free tier). Two in-app purchases are available: remove ads permanently, or unlock extra vocabulary packs (Verbs, Prepositions, Opposites, Under the Sea, and more). The premium content is already bundled in the app — IAP unlocks access without any download.
+
+Built with Flutter for Android and iOS from a single codebase. Audio playback uses `just_audio`; letter tracing is handled with a custom `CustomPainter` path-distance check.

@@ -24,8 +24,10 @@ Kids Edu Zone teaches Thai children the fundamentals of reading and writing in T
 
 **Spaced exposure across activity types.** Each letter is introduced (see + hear), practised (trace), then tested (spot the matching character in a grid). The three activities are paced so a child encounters a character multiple times in a single session without repetition feeling monotonous.
 
-**No ads, no IAP.** The app is a one-time purchase. Parents don't want ads interrupting a three-year-old's learning session, and they don't want surprise in-app purchases. Everything is unlocked on install.
+**Ad-supported, with optional IAP.** The free version is ad-supported. Parents can remove ads with a one-time in-app purchase. No subscription, no recurring charge.
 
 ## Technical approach
 
-Audio (Thai and English pronunciation recorded by native speakers) ships in the app bundle. All progress is stored locally in SQLite. No account required. Built with Flutter for cross-platform support; the tracing engine uses `CustomPainter` with path-distance checking to score stroke accuracy.
+100% offline — all audio and images ship in the app bundle. Progress is stored on-device. No account, no server call needed. Works on the cheapest Android phones with no connectivity.
+
+Built with Flutter for cross-platform support. The tracing engine uses Google ML Kit Digital Ink Recognition (`google_mlkit_digital_ink_recognition`) to score stroke accuracy — the ML model runs on-device, no server round-trip.
