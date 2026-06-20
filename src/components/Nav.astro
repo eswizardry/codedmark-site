@@ -10,14 +10,17 @@ const h = (anchor: string) => isHome ? anchor : `/${anchor}`;
       CodeDMark<span class="dot">.</span>
     </a>
     <div class="nav-links">
-      <a href={h('#work')}>Work</a>
-      <a href={h('#services')}>Services</a>
-      <a href={h('#stack')}>Stack</a>
-      <a href={h('#about')}>About</a>
-      <a href={h('#contact')}>Contact</a>
-      <a href="/blog/">Blog</a>
+      <a href={h('#work')} data-i18n="nav.work">Work</a>
+      <a href={h('#services')} data-i18n="nav.services">Services</a>
+      <a href={h('#stack')} data-i18n="nav.stack">Stack</a>
+      <a href={h('#about')} data-i18n="nav.about">About</a>
+      <a href={h('#contact')} data-i18n="nav.contact">Contact</a>
+      <a href="/blog/" data-i18n="nav.blog">Blog</a>
     </div>
     <div class="nav-right">
+      <button class="tbtn" id="lang-toggle" aria-label="Switch language">
+        <span id="lang-label">TH</span>
+      </button>
       <button class="tbtn" id="theme" aria-label="Toggle theme">
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
           <circle cx="12" cy="12" r="4.5"/>
@@ -27,7 +30,7 @@ const h = (anchor: string) => isHome ? anchor : `/${anchor}`;
           <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
         </svg>
       </button>
-      <a href={h('#contact')} class="btn btn-primary">Start a project <span class="arr">→</span></a>
+      <a href={h('#contact')} class="btn btn-primary" data-i18n="nav.cta">Start a project <span class="arr">→</span></a>
       <button class="hamb" id="hamb" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -35,13 +38,13 @@ const h = (anchor: string) => isHome ? anchor : `/${anchor}`;
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href={h('#work')}>Work</a>
-  <a href={h('#services')}>Services</a>
-  <a href={h('#stack')}>Stack</a>
-  <a href={h('#about')}>About</a>
-  <a href={h('#contact')}>Contact</a>
-  <a href="/blog/">Blog</a>
-  <a href={h('#contact')} class="btn btn-primary">Start a project →</a>
+  <a href={h('#work')} data-i18n="nav.work">Work</a>
+  <a href={h('#services')} data-i18n="nav.services">Services</a>
+  <a href={h('#stack')} data-i18n="nav.stack">Stack</a>
+  <a href={h('#about')} data-i18n="nav.about">About</a>
+  <a href={h('#contact')} data-i18n="nav.contact">Contact</a>
+  <a href="/blog/" data-i18n="nav.blog">Blog</a>
+  <a href={h('#contact')} class="btn btn-primary" data-i18n="nav.cta">Start a project →</a>
 </div>
 
 <script>

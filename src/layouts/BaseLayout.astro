@@ -26,17 +26,153 @@ const {
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- Inline theme script prevents FOUC -->
+  <!-- Theme + language detection — runs before first paint -->
   <script is:inline>
     (function () {
+      // Theme
+      try { var t = localStorage.getItem('cdm-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+      // Language
       try {
-        var saved = localStorage.getItem('cdm-theme');
-        if (saved) document.documentElement.setAttribute('data-theme', saved);
-      } catch (e) {}
+        var l = localStorage.getItem('cdm-lang');
+        window.__cdmLang = l || ((navigator.language || '').toLowerCase().startsWith('th') ? 'th' : 'en');
+      } catch (e) { window.__cdmLang = 'en'; }
     })();
   </script>
 </head>
 <body>
   <slot />
+  <!-- i18n translations + apply on DOMContentLoaded -->
+  <script is:inline>
+    (function () {
+      var LANG_KEY = 'cdm-lang';
+      var enCache = new Map();
+      var enHtmlCache = new Map();
+
+      var TH = {
+        // nav
+        'nav.work': 'ผลงาน',
+        'nav.services': 'บริการ',
+        'nav.stack': 'เทคโนโลยี',
+        'nav.about': 'เกี่ยวกับ',
+        'nav.contact': 'ติดต่อ',
+        'nav.blog': 'บล็อก',
+        'nav.cta': 'เริ่มโปรเจกต์',
+        // hero
+        'hero.eyebrow': 'สตูดิโอซอฟต์แวร์ · ประเทศไทย',
+        'hero.h1': 'ซอฟต์แวร์<br><span class="g">คุณภาพจริง</span>',
+        'hero.lead': 'จากไมโครคอนโทรลเลอร์สู่มือถือ <b>CodeDMark</b> ออกแบบ พัฒนา และทดสอบซอฟต์แวร์ที่ส่งมอบตรงเวลา — และยังใช้งานได้หลังผ่านมือวิศวกรคนต่อไป C, Qt, Flutter และความหลงใหลกในการทดสอบ',
+        'hero.cta1': 'เริ่มโปรเจกต์',
+        'hero.cta2': 'ดูผลงาน',
+        // strip
+        'strip.label': 'เราทำงานกับ',
+        // services
+        'svc.eyebrow': 'สิ่งที่เราทำ',
+        'svc.h2': 'สตูดิโอเดียว ครบทุก stack — จากซิลิคอนถึงหน้าจอ',
+        'svc.sub': 'เราพาผลิตภัณฑ์จากแนวคิดสู่บิลด์ที่ทดสอบแล้วและส่งมอบแล้ว เลือกแค่เลเยอร์ที่ต้องการ หรือมอบทั้งหมดให้เรา',
+        'svc.mobile.title': 'แอปมือถือ',
+        'svc.mobile.desc': 'แอปข้ามแพลตฟอร์มด้วย Flutter — โค้ดเดียว iOS และ Android รู้สึกเป็น native และพร้อมใช้ออฟไลน์',
+        'svc.embedded.title': 'ระบบฝังตัวและเฟิร์มแวร์',
+        'svc.embedded.desc': 'เฟิร์มแวร์ bare-metal และ RTOS บน Cortex-M ไดรเวอร์ การสื่อสาร bring-up และลอจิกที่ผ่านการทดสอบยูนิต',
+        'svc.web.title': 'เว็บแอปและเว็บไซต์',
+        'svc.web.desc': 'ไซต์และแดชบอร์ด static-first ที่โหลดเร็ว สร้างให้ deploy ได้ทุกที่ และได้คะแนน Lighthouse สีเขียว',
+        'svc.desktop.title': 'Desktop และ HMI',
+        'svc.desktop.desc': 'อินเทอร์เฟซ Qt/C++ สำหรับเครื่องมือ kiosk และพาเนลอุตสาหกรรม — บูตเย็นและทำงานต่อเนื่องหลายปี',
+        'svc.edtech.title': 'EdTech และการเรียนรู้',
+        'svc.edtech.desc': 'เครื่องมือการเรียนรู้สำหรับห้องเรียน — การฝึกซ้อมแบบปรับตัว ติดตามความก้าวหน้า และเนื้อหาที่สร้างสำหรับนักเรียนจริง',
+        'svc.consulting.title': 'ที่ปรึกษาและตรวจสอบโค้ด',
+        'svc.consulting.desc': 'สายตาที่สอง — รีวิวสถาปัตยกรรม กอบกู้ test coverage และนำบิลด์ที่ค้างอยู่ออกสู่ตลาด',
+        // work
+        'work.eyebrow': 'ผลงานที่เลือก',
+        'work.h2': 'สิ่งที่เราสร้าง ทดสอบ และส่งมอบ',
+        'work.sub': 'ตัวอย่างผลงานจาก portfolio ครอบคลุมมือถือ ระบบฝังตัว และ desktop',
+        'work.case': 'เคสสตัดดี้',
+        // stack
+        'stack.eyebrow': 'เทคโนโลยีและทักษะ',
+        'stack.h2': 'เครื่องมือที่เราเลือกใช้',
+        'stack.sub': 'ลึกในสิ่งที่สำคัญ ปฟิบัตินิยมในทุกที่ เราเลือกเครื่องมือที่น่าเบื่อ พิสูจน์แล้ว และทดสอบอย่างหนัก',
+        'stack.mobile': 'มือถือ',
+        'stack.embedded': 'ระบบฝังตัว',
+        'stack.desktop': 'Desktop และเว็บ',
+        'stack.quality': 'คุณภาพและ ops',
+        // process
+        'proc.eyebrow': 'วิธีการทำงาน',
+        'proc.h2': 'ชัดเจน แม่นยำ พิสูจน์แล้ว',
+        'proc.sub': 'ไม่มีศัพท์โก้เก๋ ไม่มีเซอร์ไพร์ส์ ตัวเลขแทนคำคุณศัพท์ หลักฐานก่อนคำสัญญา',
+        'proc.scope': 'กำหนดขอบเขต',
+        'proc.scope.desc': 'เราวิเคราะห์ปัญหาจริง ข้อจำกัด และความหมายของ “เสร็จแล้ว” — เป็นลายลักษณ์อักษร ก่อนเขียนโค้ดแม้แต่บรรทัดเดียว',
+        'proc.build': 'พัฒนา',
+        'proc.build.desc': 'รอบสั้น ซอฟต์แวร์ที่ใช้งานได้ตั้งแต่ต้น คุณเห็นความก้าวหน้าทุกสัปดาห์ ไม่ใช่กล่องดำอยู่เดือนนึ่ง',
+        'proc.test': 'ทดสอบ',
+        'proc.test.desc': 'ทดสอบยูนิต ทดสอบอินทิเกรชัน และบนฮาร์ดแวร์จริงในที่ที่สำคัญ ถ้าผ่านเกณฑ์ เราเก็บไว้',
+        'proc.ship': 'ส่งมอบ',
+        'proc.ship.desc': 'ส่งมอบที่สมบูรณ์ — บิลด์ที่ทดสอบแล้ว เอกสาร และ repo ที่วิศวกรคนต่อไปอ่านได้จริง เครื่องหมายแห่งคุณภาพ',
+        // about
+        'about.eyebrow': 'เกี่ยวกับ',
+        'about.h2': 'ทีมเล็ก ส่งมอบเหมือนทีมใหญ่',
+        'about.p1': '<b>CodeDMark</b> คือสตูดิโอซอฟต์แวร์จากประเทศไทย ชื่อนี้ทำงานได้สองภาษา: ในภาษาอังกฤษอ่านว่า developer\'s mark บนผลงาน ในภาษาไทย <b>โค้ดดีมาก</b> แปลว่า “โค้ดที่ดีมาก”',
+        'about.p2': 'เราเริ่มต้นจากระบบฝังตัว — ที่ที่บักหนึ่งตัวหมายถึงการเรียกคืนจากสนาม ไม่ใช่แค่ hotfix — ดังนั้นการทดสอบจึงไม่ใช่แค่ขั้นตอน แต่เป็นนิสัย วินัยนั้นติดตามเราขึ้นมาถึง stack มือถือและเว็บ',
+        'about.p3': 'ก่อตั้งโดย <b>บัญชา ราชาอินทร์</b> เรารับงานในจำนวนน้อยต่อครั้ง เพื่อให้คนที่กำหนดขอบเขตโปรเจกต์ของคุณคือคนที่สร้างมันจริงๆ',
+        'about.tested': 'ทดสอบแล้ว',
+        'about.shipped': 'ส่งมอบแล้ว',
+        'about.measured': 'วัดผลแล้ว',
+        'about.entity': 'นิติบุคคล',
+        'about.registered': 'จดทะเบียน',
+        'about.focus': 'เชี่ยวชาญ',
+        // contact
+        'contact.eyebrow': 'เริ่มโปรเจกต์',
+        'contact.h2': 'มีอะไรที่ต้องการ<span class="g">ส่งมอบ?</span>',
+        'contact.p': 'บอกเราว่าคุณกำลังสร้างอะไร เราจะตอบกลับด้วยคำตอบที่ชัดเจน ตรงประเด็น — ขอบเขต เวลา และความหมายของ “เสร็จแล้ว” ไม่มีศัพท์โก้เก๋',
+        'contact.cta1': 'ส่งอีเมล',
+        // footer
+        'footer.desc': 'ซอฟต์แวร์ที่ส่งมอบตรงเวลาและยังใช้งานได้หลังผ่านมือวิศวกรคนต่อไป ระบบฝังตัว มือถือ และเว็บ — สร้างและทดสอบในประเทศไทย',
+        'footer.studio': 'สตูดิโอ',
+        'footer.connect': 'ติดต่อ',
+        'footer.work': 'ผลงาน',
+        'footer.services': 'บริการ',
+        'footer.stack': 'เทคโนโลยี',
+        'footer.about': 'เกี่ยวกับ',
+      };
+
+      function applyLang(lang) {
+        document.documentElement.setAttribute('lang', lang === 'th' ? 'th' : 'en');
+        document.documentElement.setAttribute('data-lang', lang);
+        var lbl = document.getElementById('lang-label');
+        if (lbl) lbl.textContent = lang === 'th' ? 'EN' : 'TH';
+
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (lang === 'th' && TH[key] !== undefined) {
+            if (!enCache.has(el)) enCache.set(el, el.textContent);
+            el.textContent = TH[key];
+          } else if (lang === 'en' && enCache.has(el)) {
+            el.textContent = enCache.get(el);
+          }
+        });
+
+        document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n-html');
+          if (lang === 'th' && TH[key] !== undefined) {
+            if (!enHtmlCache.has(el)) enHtmlCache.set(el, el.innerHTML);
+            el.innerHTML = TH[key];
+          } else if (lang === 'en' && enHtmlCache.has(el)) {
+            el.innerHTML = enHtmlCache.get(el);
+          }
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        applyLang(window.__cdmLang || 'en');
+        var toggle = document.getElementById('lang-toggle');
+        if (toggle) {
+          toggle.addEventListener('click', function () {
+            var next = window.__cdmLang === 'th' ? 'en' : 'th';
+            window.__cdmLang = next;
+            try { localStorage.setItem(LANG_KEY, next); } catch (e) {}
+            applyLang(next);
+          });
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

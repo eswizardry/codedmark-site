@@ -18,10 +18,10 @@ const previewMap = {
   <div class="wrap">
     <div class="sec-head reveal">
       <div>
-        <span class="eyebrow">Selected work</span>
-        <h2>Things we built, tested, and shipped.</h2>
+        <span class="eyebrow" data-i18n="work.eyebrow">Selected work</span>
+        <h2 data-i18n="work.h2">Things we built, tested, and shipped.</h2>
       </div>
-      <p class="sub">A slice of the portfolio across mobile, embedded, and desktop.</p>
+      <p class="sub" data-i18n="work.sub">A slice of the portfolio across mobile, embedded, and desktop.</p>
     </div>
     <div class="work-grid">
       {entries.map(entry => {
@@ -50,7 +50,7 @@ const previewMap = {
               </div>
               <div class="work-cta">
                 <a href={`/work/${entry.slug}/`} class="btn btn-ghost work-btn">
-                  Case study <span class="arr">→</span>
+                  <span data-i18n="work.case">Case study</span> <span class="arr">→</span>
                 </a>
                 {entry.data.link && (
                   <a href={entry.data.link} target="_blank" rel="noopener" class="btn btn-ghost work-btn">

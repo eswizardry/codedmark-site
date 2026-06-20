@@ -17,7 +17,7 @@
   --border: #E4E7EC;
   --border-strong: #D4D8DF;
   --shadow: 0 1px 2px rgba(16,18,23,.04), 0 12px 32px -16px rgba(16,18,23,.18);
-  --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --sans: 'Plus Jakarta Sans', 'IBM Plex Sans Thai', system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, monospace;
   --thai: 'IBM Plex Sans Thai', system-ui, sans-serif;
   --nav-h: 72px;
@@ -112,6 +112,7 @@ nav .wrap { height: 100%; display: flex; align-items: center; justify-content: s
 .tbtn .moon { display: none; }
 [data-theme="dark"] .tbtn .sun { display: none; }
 [data-theme="dark"] .tbtn .moon { display: block; }
+#lang-toggle { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; }
 .btn {
   display: inline-flex; align-items: center; gap: 9px;
   font-family: var(--sans); font-weight: 700; font-size: 14.5px;

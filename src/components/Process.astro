@@ -1,21 +1,25 @@
 ---
 const steps = [
   {
+    key: 'scope',
     n: '— 01',
     heading: 'Scope',
     desc: 'We map the real problem, the constraints, and what "done" means — in writing, before a line of code.',
   },
   {
+    key: 'build',
     n: '— 02',
     heading: 'Build',
     desc: 'Short cycles, working software early. You see progress every week, not a black box for a month.',
   },
   {
+    key: 'test',
     n: '— 03',
     heading: 'Test',
     desc: 'Unit tests, integration tests, and on real hardware where it matters. If a teacher would tick it, we keep it.',
   },
   {
+    key: 'ship',
     n: '— 04',
     heading: 'Ship',
     desc: 'A clean handoff — tested build, docs, and a repo your next engineer can actually read. Marked good.',
@@ -26,17 +30,17 @@ const steps = [
   <div class="wrap">
     <div class="sec-head reveal">
       <div>
-        <span class="eyebrow">How we work</span>
-        <h2>Plain. Precise. Proven.</h2>
+        <span class="eyebrow" data-i18n="proc.eyebrow">How we work</span>
+        <h2 data-i18n="proc.h2">Plain. Precise. Proven.</h2>
       </div>
-      <p class="sub">No buzzwords, no surprises. Numbers over adjectives, evidence before promises.</p>
+      <p class="sub" data-i18n="proc.sub">No buzzwords, no surprises. Numbers over adjectives, evidence before promises.</p>
     </div>
     <div class="proc reveal">
       {steps.map(s => (
         <div class="step">
           <div class="n">{s.n}</div>
-          <h4>{s.heading}</h4>
-          <p>{s.desc}</p>
+          <h4 data-i18n={`proc.${s.key}`}>{s.heading}</h4>
+          <p data-i18n={`proc.${s.key}.desc`}>{s.desc}</p>
         </div>
       ))}
     </div>
