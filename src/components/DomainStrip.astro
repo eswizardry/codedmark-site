@@ -1,0 +1,17 @@
+---
+const chips = [
+  'Embedded · C',
+  'STM32 / MCU',
+  'Flutter',
+  'Qt / C++',
+  'Web',
+  'Linux SBC',
+  'Testing & CI',
+];
+---
+<div class="strip">
+  <div class="wrap">
+    <span class="lbl">We work across</span>
+    {chips.map(c => <span class="chip">{c}</span>)}
+  </div>
+</div>
