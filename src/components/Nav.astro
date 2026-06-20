@@ -1,18 +1,20 @@
 ---
 import Mark from './Mark.astro';
+const isHome = Astro.url.pathname === '/';
+const h = (anchor: string) => isHome ? anchor : `/${anchor}`;
 ---
 <nav>
   <div class="wrap">
-    <a href="#top" class="brand">
+    <a href={h('#top')} class="brand">
       <Mark size={38} />
       CodeDMark<span class="dot">.</span>
     </a>
     <div class="nav-links">
-      <a href="#work">Work</a>
-      <a href="#services">Services</a>
-      <a href="#stack">Stack</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a href={h('#work')}>Work</a>
+      <a href={h('#services')}>Services</a>
+      <a href={h('#stack')}>Stack</a>
+      <a href={h('#about')}>About</a>
+      <a href={h('#contact')}>Contact</a>
       <a href="/blog/">Blog</a>
     </div>
     <div class="nav-right">
@@ -25,7 +27,7 @@ import Mark from './Mark.astro';
           <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
         </svg>
       </button>
-      <a href="#contact" class="btn btn-primary">Start a project <span class="arr">→</span></a>
+      <a href={h('#contact')} class="btn btn-primary">Start a project <span class="arr">→</span></a>
       <button class="hamb" id="hamb" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -33,13 +35,13 @@ import Mark from './Mark.astro';
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#work">Work</a>
-  <a href="#services">Services</a>
-  <a href="#stack">Stack</a>
-  <a href="#about">About</a>
-  <a href="#contact">Contact</a>
+  <a href={h('#work')}>Work</a>
+  <a href={h('#services')}>Services</a>
+  <a href={h('#stack')}>Stack</a>
+  <a href={h('#about')}>About</a>
+  <a href={h('#contact')}>Contact</a>
   <a href="/blog/">Blog</a>
-  <a href="#contact" class="btn btn-primary">Start a project →</a>
+  <a href={h('#contact')} class="btn btn-primary">Start a project →</a>
 </div>
 
 <script>
