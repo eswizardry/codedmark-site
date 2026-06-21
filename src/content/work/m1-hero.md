@@ -8,7 +8,7 @@ outcomes:
   - "Parent dashboard shows daily progress without interrupting the child's session"
 stack: ["Next.js 16", "TypeScript", "Supabase", "Tailwind CSS", "Fly.io"]
 previewType: "browser"
-screenshot: "/images/work/m1-hero.png"
+screenshot: "/images/work/m1-hero-home.png"
 link: "https://www.m1hero.com"
 linkLabel: "Visit m1hero.com"
 order: 1
@@ -27,6 +27,13 @@ M1 Hero: The Mythic Academy is a Thai-first web platform where students explore 
 Students complete **Ancient Quests** (topic chapters), fight **Boss Stages** (chapter tests), and earn XP and ranks on the Nakara ladder — from เด็กฝึกหัด (Apprentice) up to เทพแห่งนครา (God of the Spires) at level 99.
 
 **Live at [www.m1hero.com](https://www.m1hero.com).**
+
+<figure>
+
+![M1 Hero student dashboard — the Nakara-themed hub with daily quests, rank progression, and the Himmapan subject map](/images/work/m1-hero-dashboard.png)
+
+<figcaption>The student dashboard (แผนที่นักรบ) — daily quests, Nakara rank progression, and the Himmapan subject map.</figcaption>
+</figure>
 
 ## Technical approach
 
