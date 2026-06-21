@@ -50,13 +50,13 @@ void test_led_blinks_on_tick(void) {
 
 ## What this catches
 
-In the last twelve months, on client projects:
+These are the classes of bug host-side tests are built to catch — the kind that hide from an oscilloscope and cost hours on the bench:
 
-- **Off-by-one in a CRC table** — caught before taping out the PCB
-- **State machine that never exited an error state** — caught before field deployment
-- **Sensor calibration that diverged at the edges of the measurement range** — caught in CI, fixed with a lookup table correction
+- **Off-by-one in a CRC table** — a single wrong entry that corrupts one byte in a thousand
+- **A state machine that never exits an error state** — fine in the happy path, stuck forever on the unhappy one
+- **Sensor calibration that diverges at the edges of the measurement range** — accurate in the middle, wrong where it matters
 
-None of these would have been obvious on a scope. Two of them would have required hardware reproduction to isolate. With host-side tests they were pull-request comments.
+None of these are obvious on a scope. Most need hardware reproduction to isolate. With host-side tests they surface as a failing assertion in CI — a pull-request comment, not a field return.
 
 ## The boundary rule
 

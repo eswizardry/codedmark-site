@@ -1,39 +1,43 @@
 ---
-title: "Industrial Control Panel"
-kicker: "Desktop · HMI"
-summary: "Qt/C++ touchscreen HMI on a fanless Linux SBC — live Modbus telemetry, configurable alarms, and a 4-second cold boot that runs unattended for years."
+title: "Touchscreen HMI Panels"
+kicker: "Desktop · Capability"
+summary: "Qt/C++ touchscreen HMIs on fanless Linux SBCs — live telemetry, configurable alarms, and a fast cold boot that runs unattended. This is how we approach industrial UI work."
 outcomes:
-  - "4-second cold boot to live telemetry — meets hard power-cycle requirement"
-  - "18 months field deployment, zero crashes, watchdog never fired"
-  - "Single codebase handles both Modbus RTU (RS-485) and Modbus TCP instruments"
+  - "Qt EGLFS on bare Linux — renders straight to the framebuffer, no desktop needed"
+  - "Unified driver layer so Modbus RTU (RS-485) and Modbus TCP look the same to the UI"
+  - "Watchdog + systemd auto-recovery patterns for unattended, long-running deployments"
 stack: ["Qt", "C++", "Linux", "Modbus RTU", "Modbus TCP", "systemd"]
 previewType: "window"
 order: 10
 ---
 
-## The challenge
+> **A capability piece, not a specific client engagement.** This describes how
+> CodeDMark approaches industrial touchscreen HMIs — the stack, the boot story,
+> and the reliability patterns we'd bring. It reflects our Qt/C++ and embedded
+> Linux capability, not a particular delivered installation.
 
-A manufacturing client needed a touchscreen panel to replace ageing SCADA terminals on the production floor. Hard requirements: display live process data from a Modbus network, trigger visual and audio alarms when readings cross thresholds, log data for ISO 9001 compliance, and boot within 5 seconds of a power cycle — every time, unattended, for at least two years.
+## The kind of problem
 
-The existing terminals ran on proprietary SCADA software with a five-figure per-seat licence. The replacement had to run on a $50 ARM SBC.
+Touchscreen panels on a production floor have unforgiving requirements: display live process data from a Modbus network, trigger visual and audio alarms when readings cross thresholds, log data for compliance, and boot quickly after a power cycle — unattended, reliably, for years. Often the budget is a low-cost ARM SBC, not an industrial PC.
 
-## What we built
+That's a good fit for Qt/C++ on a stripped-down Linux image — which is the kind of stack we're equipped to build.
 
-A Qt/C++ HMI application on a fanless ARM SBC running a minimal Linux BSP. The application renders directly on the framebuffer with Qt's hardware-accelerated backend — no desktop environment, no window manager, nothing between the app and the screen. Cold boot to live data: under 4 seconds.
+## How we'd build it
+
+A Qt/C++ HMI application on a fanless ARM SBC running a minimal Linux BSP. The application renders directly on the framebuffer with Qt's hardware-accelerated EGLFS backend — no desktop environment, no window manager, nothing between the app and the screen. The target is a cold boot to live data in a handful of seconds.
 
 ## Technical approach
 
-**Qt on bare Linux.** The BSP strips everything non-essential: no X11, no PulseAudio, no cron jobs. The HMI is the only userspace application. Qt's EGLFS backend renders hardware-accelerated directly to the display.
+**Qt on bare Linux.** The BSP strips everything non-essential: no X11, no desktop services, no stray cron jobs. The HMI is the only userspace application. Qt's EGLFS backend renders hardware-accelerated directly to the display.
 
-**Unified Modbus driver.** A C++ abstraction presents Modbus RTU (RS-485) and Modbus TCP registers through the same interface. The UI layer never knows which transport is underneath — the client's mix of older serial instruments and newer networked PLCs works transparently.
+**Unified Modbus driver.** A C++ abstraction presents Modbus RTU (RS-485) and Modbus TCP registers through the same interface. The UI layer never knows which transport is underneath — a mix of older serial instruments and newer networked PLCs works transparently.
 
-**Alarm engine.** Threshold rules are stored in a JSON config file edited by the plant engineer — no recompilation needed. Alarms are logged with ISO 8601 timestamps, displayed in a persistent sidebar, and trigger a relay output wired to a physical buzzer.
+**Alarm engine.** Threshold rules live in a config file edited by the plant engineer — no recompilation needed. Alarms are logged with ISO 8601 timestamps, shown in a persistent sidebar, and can trigger a relay output wired to a physical buzzer.
 
-**Watchdog and auto-recovery.** A hardware watchdog timer fires if the application hangs. A systemd service restarts the HMI after any crash. In 18 months of field deployment, the watchdog has never fired.
+**Watchdog and auto-recovery.** A hardware watchdog timer fires if the application hangs; a systemd service restarts the HMI after any crash. These are the patterns that make an unattended panel survive years in the field.
 
-## Outcomes
+## Why it matters
 
-- 4-second cold boot to live telemetry on a $50 ARM board
-- 18 months field deployment with zero unplanned downtime
-- Alarm log satisfies the client's ISO 9001 audit trail requirement
-- Replacing proprietary SCADA licences saved the client over ฿300,000 per year
+- A $50-class ARM board can replace a five-figure proprietary SCADA seat
+- One codebase spans serial and networked instruments
+- Boot-fast + watchdog + auto-restart is what unattended reliability actually requires
