@@ -1,0 +1,39 @@
+---
+// Layout for app privacy policies and terms (Markdown pages under src/pages/privacy/).
+// Store listings link here, so the page must name CodeDMark as the developer everywhere.
+import BaseLayout from './BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const { frontmatter } = Astro.props;
+const { title, description, app, updated } = frontmatter;
+---
+<BaseLayout title={`${title} — CodeDMark`} description={description}>
+  <Nav />
+  <span id="top"></span>
+
+  <article>
+    <header class="article-hero">
+      <div class="wrap">
+        <div class="article-hero-inner">
+          <span class="eyebrow">Privacy · {app}</span>
+          <h1>{title}</h1>
+          <p class="article-desc">{description}</p>
+          <div class="article-byline">
+            <span>CodeDMark</span>
+            <span class="sep">·</span>
+            <span>Last updated {updated}</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <div class="prose">
+        <slot />
+      </div>
+    </div>
+  </article>
+
+  <Footer />
+</BaseLayout>
